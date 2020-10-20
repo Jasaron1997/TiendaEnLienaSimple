@@ -1,0 +1,222 @@
+.responsibaTableReporte {
+overflow-x:auto;
+}
+
+.responsibaTableReporte table tr td {
+  text-align: right !important;
+  border: 1px solid black;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji" !important;
+    font-size: 1rem !important;
+    font-weight: 400;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+.bg-Color-Extra,.nav-link,.navbar-brand,.dropdown-item,.dropdown-menu,.dropdown-divider{
+  background-color: orange !important;
+  color: white !important;
+}
+
+
+.App-header {
+  background-color: white;
+  min-height: 100vh;
+  color: black;
+}
+
+.App-select {
+  color: black !important;
+}
+
+
+.inicio-vision-mision-valore{
+  /* font-family: Arial, Helvetica, sans-serif; */
+  font-weight: bold;
+}
+
+.checkbox{
+  width: 30px !important;
+}
+
+.buttonTam{
+  width: 100px !important;
+  height: 30px !important;
+}
+.divMostrar{
+  display: block !important;
+}
+.divNoMostrar{
+  display: none !important;
+}
+
+
+td,
+th,
+tr,
+table.ticket {
+    /* border-top: 1px solid black; */
+    border-collapse: collapse;
+}
+
+td.producto,
+th.producto {
+    width: 50px;
+    max-width: 50px;
+}
+
+td.cantidad,
+th.cantidad {
+    width: 50px;
+    max-width: 50px;
+    word-break: break-all;
+}
+
+td.precio,
+th.precio {
+    width: 50px;
+    max-width: 50px;
+    word-break: break-all;
+}
+
+.centrado {
+    text-align: center;
+    align-content: center;
+}
+.izquieda {
+  text-align: left !important;
+  align-content: center;
+}
+
+
+/* #region comprobante */
+.comprobante {
+  width: 400px;
+  max-width: 400px;
+}
+
+
+td,
+th,
+tr,
+table.comprobante,p.comprobante {
+    /* border-top: 1px solid black; */
+    border-collapse: collapse;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif
+}
+
+
+
+td.Piloto {
+  width: 50px;
+  max-width: 50px;
+  word-break: break-all;
+}
+th.NOMBRE_PILOTO {
+  width: 50px;
+  max-width: 50px;
+  word-break: break-all;
+}
+
+td.Combustible {
+  width: 50px;
+  max-width: 50px;
+  word-break: break-all;
+}
+
+th.Combustible {
+  width: 50px;
+  max-width: 50px;
+  word-break: break-all;
+}
+
+td.GalDespach {
+  width: 50px;
+  max-width: 50px;
+  word-break: break-all;
+}
+th.CANTIDAD_CONSUMIDA {
+  width: 50px;
+  max-width: 50px;
+  word-break: break-all;
+}
+
+td.PrecioUnit {
+  width: 50px;
+  max-width: 50px;
+  word-break: break-all;
+}
+th.PRECIO_COMBUSTIBLE {
+  width: 50px;
+  max-width: 50px;
+  word-break: break-all;
+}
+
+td.VtaTotal {
+  width: 50px;
+  max-width: 50px;
+  word-break: break-all;
+}
+th.VentaTotal {
+  width: 50px;
+  max-width: 50px;
+  word-break: break-all;
+}
+
+th.NOMBRE_UNIDAD {
+  width: 50px;
+  max-width: 50px;
+  word-break: break-all;
+}
+th.Unidad {
+  width: 50px;
+  max-width: 50px;
+  word-break: break-all;
+}
+
+th.ODOTOMETRO {
+  width: 50px;
+  max-width: 50px;
+  word-break: break-all;
+}
+th.Odometro {
+  width: 50px;
+  max-width: 50px;
+  word-break: break-all;
+}
+
+th.CANTIDAD_ASIGNADA {
+  width: 50px;
+  max-width: 50px;
+  word-break: break-all;
+}
+th.Cantidad {
+  width: 50px;
+  max-width: 50px;
+  word-break: break-all;
+}
+
+
+.espacio {
+  width: 300px !important;
+  max-width: 300px !important;
+  word-break: break-all;
+}
+
+
+/* #endregion */
+
+
+
