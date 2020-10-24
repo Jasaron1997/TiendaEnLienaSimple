@@ -186,11 +186,11 @@ class navbar extends Component {
                    
                     {this.props.Access("Cliente") && (
                       <Link
-                        to={`${process.env.PUBLIC_URL}/ventas`}
-                        className="dropdown-item"
-                      >
-                       ventas
-                      </Link>
+                    to={`${process.env.PUBLIC_URL}/CarritoVenta`}
+                    className="nav-link"
+                  >
+                    Carrito
+                  </Link>
                     )}
                   </div>
                 </div>
