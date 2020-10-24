@@ -21,10 +21,12 @@ export async function post(req, res) {
   const {Cliente,
     Fecha,
     Usuario,
-    Factura,
     Detalle} = req.body;
   try {
 
+let Factura=await Ventas.count({});
+console.log(Factura)
+Factura++;
 const datos =  new Ventas({				
   Cliente,
   Fecha,

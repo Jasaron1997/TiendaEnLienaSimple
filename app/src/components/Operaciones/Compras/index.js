@@ -4,14 +4,14 @@ import { Link, Redirect } from "react-router-dom";
 
 const estadoInicial = { BuscarDatos: "", data: null };
 
-class Rol extends Component {
+class Index extends Component {
   constructor(props) {
     super(props);
     this.state = { data: estadoInicial };
   }
 
   Buscar = async () =>{
-    const data = await fetchGet(`${process.env.REACT_APP_SERVER}/api/roles`);
+    const data = await fetchGet(`${process.env.REACT_APP_SERVER}/api/compra`);
     this.setState({ dataFiltrada: data.data, data: data.data,estado:"Re Activar"});
   }
 
@@ -40,11 +40,11 @@ cambioEstado = (e) => {
 
 Eliminar = async (_id) => {
   const data = await fetchDelete(
-    `${process.env.REACT_APP_SERVER}/api/roles/${_id}`
+    `${process.env.REACT_APP_SERVER}/api/compra/${_id}`
   );
   alert(data.message);
   const dataGet = await fetchGet(
-    `${process.env.REACT_APP_SERVER}/api/roles`
+    `${process.env.REACT_APP_SERVER}/api/compra`
   );
   this.setState({ dataFiltrada: dataGet.data, data: dataGet.data });
 };
@@ -65,10 +65,10 @@ Eliminar = async (_id) => {
     return (
       <Fragment>
         {redireccion}
-        <h1 className="text-center mb-5">Rol</h1>
+        <h1 className="text-center mb-5">compras</h1>
         <form class="form-inline " onSubmit={this.BuscarDatos}>
           <label className="ml-5 mr-5">
-            <strong>Nombre Rol:</strong>
+            <strong>Buscar Factura:</strong>
           </label>
           <input
             class="form-control mr-sm-5"
@@ -85,7 +85,7 @@ Eliminar = async (_id) => {
         </form>
 
           <Link
-            to={`${process.env.PUBLIC_URL}/roles/crear`}
+            to={`${process.env.PUBLIC_URL}/compras/crear`}
             className="btn btn-link  ml-5 mr-5"
           >
             Crear
@@ -95,26 +95,31 @@ Eliminar = async (_id) => {
         {this.state.dataFiltrada && (
           <div className="ml-5 mr-5">
             <div className="row border">
-              <div className="col-sm-4 col-xs-4">NOMBRE</div>
-              <div className="col-sm-4 col-xs-4 d-none d-sm-block">DESCRIPCION</div>
-              <div className="col-sm-4 col-xs-4">OPCIONES</div>
+              <div className="col-sm-2 col-xs-2">Proveedor</div>
+              <div className="col-sm-2 col-xs-2">Fecha</div>
+              <div className="col-sm-2 col-xs-2 d-none d-sm-block">Usuario</div>
+              <div className="col-sm-2 col-xs-2 d-none d-sm-block">Factura</div>
+              <div className="col-sm-2 col-xs-2">OPCIONES</div>
             </div>
             {this.state.dataFiltrada.map((item) => {
               const { _id } = item;
               return (
                 <div className="row border" key={_id}>
-                  <div className="col-sm-4 col-xs-4">{item.Nombre}</div>
-                  <div className="col-sm-4 col-xs-4 d-none d-sm-block">{item.Descripcion}</div>    
-                  <div className="col-sm-4 col-xs-4">
+                  <div className="col-sm-2 col-xs-2">{item.Proveedor[0].Nombre}</div>
+                  <div className="col-sm-2 col-xs-2">{this.props.formato(item.Fecha)}</div>
+                  <div className="col-sm-2 col-xs-2 d-none d-sm-block">{item.Usuario[0].Usuario}</div>  
+                  <div className="col-sm-2 col-xs-2 d-none d-sm-block">{item.Factura}</div>    
+
+                  <div className="col-sm-2 col-xs-2">
                       <Link
-                        to={`${process.env.PUBLIC_URL}/roles/modificar/${item._id}`}
+                        to={`${process.env.PUBLIC_URL}/compras/detalles/${item._id}`}
                         className="btn btn-warning m-1"
                       >
-                        Modificar
+                        Detalles
                       </Link>
-                      <button
+                      {/* <button
                         onClick={() => {
-                          if (window.confirm("Seguro que deseas el rol")) {
+                          if (window.confirm("Seguro que deseas el usuario")) {
                             this.Eliminar(item._id);
                           }
                         }}
@@ -122,7 +127,7 @@ Eliminar = async (_id) => {
                         className="btn btn-danger m-1 "
                       >
                         &times; Eliminar
-                      </button>
+                      </button> */}
                   </div>
                 </div>
               );
@@ -134,4 +139,4 @@ Eliminar = async (_id) => {
   }
 }
 
-export default Rol;
+export default Index;

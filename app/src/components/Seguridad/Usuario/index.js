@@ -21,7 +21,7 @@ class Index extends Component {
 
   BuscarDatos = (e) => {
     e.preventDefault();
-    const patt = new RegExp(`${this.state.BuscarDatos}`, "gi");
+    const patt = new RegExp(`${this.state.BuscarDatos}`, "i");
     const datos = this.state.data.filter((dat) => patt.exec(dat.Nombre));
 
     this.setState({
@@ -95,7 +95,7 @@ Eliminar = async (_id) => {
         {this.state.dataFiltrada && (
           <div className="ml-5 mr-5">
             <div className="row border">
-              <div className="col-sm-2 col-xs-2">Usuario</div>
+              <div className="col-sm-2 col-xs-2">Clientes</div>
               <div className="col-sm-2 col-xs-2">NOMBRE</div>
               <div className="col-sm-2 col-xs-2 d-none d-sm-block">Direccion</div>
               <div className="col-sm-2 col-xs-2 d-none d-sm-block">Telefono</div>

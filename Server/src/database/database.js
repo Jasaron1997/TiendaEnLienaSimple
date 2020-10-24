@@ -37,7 +37,6 @@ const rolesSchema=new Schema ({
 const VentasSchema = new mongoose.Schema({
   Cliente:Array,
   Fecha:Date,
-  Usuario:Array,
   Factura:Number,
   Detalle:Array
 });
@@ -47,7 +46,7 @@ const ComprasSchema = new mongoose.Schema({
   Proveedor:Array,
   Fecha:Date,
   Usuario:Array,
-  Factura:Number,
+  Factura:String,
   Detalle:Array
 });
 

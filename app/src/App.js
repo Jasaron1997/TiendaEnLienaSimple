@@ -17,8 +17,6 @@ import Rol from "./components/Seguridad/Roles";
 import RolCrear from "./components/Seguridad/Roles/RolNuevo";
 import Roleditar from "./components/Seguridad/Roles/RolEditar";
 
-//asign
-
 
 //Usuarios
 import Usuario from "./components/Seguridad/Usuario";
@@ -28,14 +26,31 @@ import UsuarioEditar from "./components/Seguridad/Usuario/UsuarioEditar";
 import Productos from "./components/Catalogos/productos";
 import ProductosNuevo from "./components/Catalogos/productos/nuevo";
 import ProductosEditar from "./components/Catalogos/productos/edit";
+import ProductosListado from "./components/Catalogos/productos/Listado";
 
 
+import Cliente from "./components/Catalogos/Clientes";
+import ClienteNuevo from "./components/Catalogos/Clientes/ClienteNuevo";
+import ClienteEditar from "./components/Catalogos/Clientes/ClienteEditar";
 
 
+import Compra from "./components/Operaciones/Compras";
+import CompraNuevo from "./components/Operaciones/Compras/ComprasNuevo";
+import CompraEditar from "./components/Operaciones/Compras/ComprasEditar";
+
+import CarritoVenta from "./components/Operaciones/CarritoVenta/Carrito";
+
+import Proveedores from "./components/Catalogos/Proveedores";
+import ProveedoresNuevo from "./components/Catalogos/Proveedores/ProveedorNuevo";
+import ProveedoresEditar from "./components/Catalogos/Proveedores/ProveedorEditar";
+function formato(texto){
+  texto=texto.substring(0,10);
+  return texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+}
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { auth: false };
+    this.state = { auth: false,Carrito:[] };
   }
 
   async componentDidMount() {
@@ -57,6 +72,39 @@ if(data)
    }
   };
 
+
+  CarritoMemoria = async (Producto) => {
+    
+    let carrito=this.state.Carrito.find(x=>x._id==Producto._id);
+
+
+if(carrito)
+{
+  let carrito=this.state.Carrito;
+      carrito.map((item)=>{
+        if(item._id==Producto._id)
+          {
+      item.Cantidad++;
+      item.Total=item.Precio*item.Cantidad;
+        }
+      })
+  await this.setState({
+    Carrito:carrito
+    })
+
+
+}else{
+  Producto.Cantidad=1;
+  Producto.Total=1*Producto.Precio;
+      await this.setState({
+        Carrito:[
+          ...this.state.Carrito,
+          {...Producto}
+            ]
+        })
+}
+  };
+ 
   Access = (acceso) => {
     const { auth  } = this.state;
     // console.log('auth',auth)
@@ -123,14 +171,30 @@ if(data)
 
           {/*Usuario*/}
           <Route exact path={`${process.env.PUBLIC_URL}/usuarios`} render={() => <Usuario Access={this.Access}/>} />
-          <Route exact path={`${process.env.PUBLIC_URL}/usuarios/crear`} render={() => <UsuarioNuevo Access={this.Access} auth={this.state.auth}/>} />
+          <Route exact path={`${process.env.PUBLIC_URL}/usuarios/crear`} render={() => <UsuarioNuevo Access={this.Access} auth={this.state.auth}  />} />
           <Route exact path={`${process.env.PUBLIC_URL}/usuarios/modificar/:id`} render={() => <UsuarioEditar  Access={this.Access}/>} />
-         
+          {/*ciente*/}
+          <Route exact path={`${process.env.PUBLIC_URL}/clientes`} render={() => <Cliente Access={this.Access}/>} />
+          <Route exact path={`${process.env.PUBLIC_URL}/clientes/crear`} render={() => <ClienteNuevo/>} />
+          <Route exact path={`${process.env.PUBLIC_URL}/clientes/modificar/:id`} render={() => <ClienteEditar  Access={this.Access} auth={this.state.auth}/>} />
+
           {/*Productos*/}
-<Route exact path={`${process.env.PUBLIC_URL}/productos`} render={() => <Productos Access={this.Access} auth={this.state.auth}/>} />
+          <Route exact path={`${process.env.PUBLIC_URL}/productos`} render={() => <Productos Access={this.Access} auth={this.state.auth}/>} />
           <Route exact path={`${process.env.PUBLIC_URL}/productos/crear`} render={() => <ProductosNuevo Access={this.Access} auth={this.state.auth}/>} />
-          <Route exact path={`${process.env.PUBLIC_URL}/productos/modificar/:id`} render={() => <ProductosEditar  Access={this.Access}/>} />
-         
+          <Route exact path={`${process.env.PUBLIC_URL}/productos/modificar/:id`} render={() => <ProductosEditar  Access={this.Access} auth={this.state.auth}/>} />
+          <Route exact path={`${process.env.PUBLIC_URL}/productos/listadoproductos`} render={() => <ProductosListado  Access={this.Access} auth={this.state.auth} CarritoMemoria={this.CarritoMemoria}/>} />
+          <Route exact path={`${process.env.PUBLIC_URL}/CarritoVenta`} render={() => <CarritoVenta  Access={this.Access} auth={this.state.auth} Carrito={this.state.Carrito}/>} />
+          
+          
+          {/*proveedores*/}
+          <Route exact path={`${process.env.PUBLIC_URL}/proveedores`} render={() => <Proveedores formato={formato} Access={this.Access} auth={this.state.auth}/>} />
+          <Route exact path={`${process.env.PUBLIC_URL}/proveedores/crear`} render={() => <ProveedoresNuevo Access={this.Access} auth={this.state.auth}/>} />
+          <Route exact path={`${process.env.PUBLIC_URL}/proveedores/modificar/:id`} render={() => <ProveedoresEditar formato={formato} Access={this.Access}/>} />
+          
+          {/*compras*/}
+          <Route exact path={`${process.env.PUBLIC_URL}/compras`} render={() => <Compra formato={formato} Access={this.Access} auth={this.state.auth}/>} />
+          <Route exact path={`${process.env.PUBLIC_URL}/compras/crear`} render={() => <CompraNuevo Access={this.Access} auth={this.state.auth}/>} />
+          <Route exact path={`${process.env.PUBLIC_URL}/compras/detalles/:id`} render={() => <CompraEditar formato={formato} Access={this.Access}/>} />
          </Switch>
         </header>
       </Router>

@@ -43,6 +43,9 @@ class navbar extends Component {
                     Inicio
                   </Link>
                 </li>
+                
+                {!this.props.auth && (
+            <Fragment>
                 <li className="nav-item ">
                   <Link
                     to={`${process.env.PUBLIC_URL}/login`}
@@ -51,8 +54,26 @@ class navbar extends Component {
                     Login
                   </Link>
                 </li>
+                <li className="nav-item ">
+                  <Link
+                    to={`${process.env.PUBLIC_URL}/clientes/crear`}
+                    className="nav-link"
+                  >
+                    Crear Usuario
+                  </Link>
+                </li>
+                </Fragment>
+                )}
           {this.props.auth && (
             <Fragment>
+            <li className="nav-item ">
+                  <Link
+                    to={`${process.env.PUBLIC_URL}/CarritoVenta`}
+                    className="nav-link"
+                  >
+                    Carrito
+                  </Link>
+                </li>
             {this.props.Access("Administrador") && (
               <li className="nav-item dropdown">
                 <div className="dropdown">
@@ -105,27 +126,34 @@ class navbar extends Component {
                     aria-labelledby="dropdownMenuButton1"
                   >
                       <Link
+                        to={`${process.env.PUBLIC_URL}/productos/listadoproductos`}
+                        className="dropdown-item"
+                      >
+                      Listado de productos
+                      </Link>
+                    {this.props.Access("Administrador") && (
+                  <Fragment>
+                      <Link
                         to={`${process.env.PUBLIC_URL}/productos`}
                         className="dropdown-item"
                       >
                       productos
                       </Link>
-                    {this.props.Access("Administrador") && (
                       <Link
                         to={`${process.env.PUBLIC_URL}/proveedores`}
                         className="dropdown-item"
                       >
                       Proveedor
                       </Link>
-                    )}
+                   
 
-                    {this.props.Access("Administrador") && (
                       <Link
                         to={`${process.env.PUBLIC_URL}/clientes`}
                         className="dropdown-item"
                       >
                       clientes
                       </Link>
+                      </Fragment>
                     )}
                   </div>
                 </div>
