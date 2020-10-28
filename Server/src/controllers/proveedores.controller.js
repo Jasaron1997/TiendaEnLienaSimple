@@ -71,13 +71,25 @@ export async function getOne(req, res) {
 
 export async function put(req, res) {
   const { _id } = req.params;
-const {data}=req.body;
+const { Nombre,
+  Direccion,
+  Telefono,
+  DPI,
+  Nit,
+  Fecha,
+  Usuario}=req.body;
   try {
-const datos=await Proveedores.findOneAndUpdate(
-  { _id: _id },
-  { data },
-  { new: true }
-).exec()
+    const datos=await Usuarios.findById(
+      { _id: _id });
+    
+      datos.Nombre=Nombre;
+      datos.Direccion=Direccion;
+      datos.Telefono=Telefono;
+      datos.DPI=DPI;
+      datos.Nit=Nit;
+      datos.Fecha=Fecha;
+      datos.Usuario=Usuario;
+    await datos.save();
     res.json({ message: "proveedor Modificado", data: datos });
   } catch (e) {
     console.log(e);
