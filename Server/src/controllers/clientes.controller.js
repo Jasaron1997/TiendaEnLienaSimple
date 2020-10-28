@@ -93,7 +93,7 @@ const datos=await Usuarios.findById(
   datos.Fecha=Fecha;
   datos.Usuario=Usuario;
   datos.Password=Password;
-
+  await datos.save();
 
     res.json({ message: "Cliente Modificado", data: datos });
   } catch (e) {

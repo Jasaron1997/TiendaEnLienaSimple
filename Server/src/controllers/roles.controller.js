@@ -66,7 +66,7 @@ const {Nombre,Descripcion}=req.body;
 const datos=await Roles.findById(_id);
 datos.Nombre=Nombre;
 datos.Descripcion=Descripcion;
-datos.save();
+await datos.save();
     res.json({ message: "Roles Modificado", data: datos });
   } catch (e) {
     console.log(e);

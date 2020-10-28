@@ -88,7 +88,8 @@ const datos=await Productos.findById(
   datos.Usuario=Usuario;
   datos.Existencia=Existencia;
   datos.Precio=Precio;
-  datos.Costo=Costo;    
+  datos.Costo=Costo;  
+  await datos.save();
   res.json({ message: "producto Modificado", data: datos });
   } catch (e) {
     console.log(e);
