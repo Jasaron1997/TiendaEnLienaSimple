@@ -37,8 +37,19 @@ import makeAnimated from "react-select/animated";
     };
     
   async componentDidMount() {
-    this.setState({ ...this.props.Carrito });
+    this.setState({Carrito:this.props.Carrito });
+
+
   }
+
+  async componentDidUpdate(prevProps) {
+    if (this.props.Carrito !== prevProps.Carrito) {
+    await  this.setState({Carrito:this.props.Carrito });
+
+
+    }
+  }
+
   Crear = async (e) => {
     e.preventDefault();
 
@@ -56,7 +67,6 @@ await this.setState({
     this.setState({ data: data.data });
     alert(data.message);
     this.props.history.push("/productos/listadoproductos");
-  
     
   
   };
@@ -99,27 +109,56 @@ await this.setState({
                     defaultValue={(this.props.auth.Usuario)?this.props.auth.Usuario:""}
                   />
                 </div>
-                              {this.props.Carrito && (
-                              <div className="m-5">
+                              {this.state.Carrito && (
+                              <div className="m-2">
                                 <div className="row border">
-                                  <div className="col-sm-3 col-xs-3">Nombre</div>
-                                  <div className="col-sm-3 col-xs-3 ">Descripcion</div>
+                                  <div className="col-sm-2 col-xs-2">Nombre</div>
+                                  <div className="col-sm-2 col-xs-2 ">Descripcion</div>
                                   <div className="col-sm-2 col-xs-2">Cantidad</div>
                                   <div className="col-sm-2 col-xs-2 ">Precio</div>
                                   <div className="col-sm-2 col-xs-2 ">Total</div>
+                                  <div className="col-sm-2 col-xs-2 ">Opciones</div>
+
                                 </div>
-                                {this.props.Carrito.map((item) => {
+                                {this.state.Carrito.map((item) => {
                                   const { _id } = item;
                                   return (
                                     <div className="row border" key={_id}>
-                                      <div className="col-sm-3 col-xs-3">{item.Nombre}</div>
-                                      <div className="col-sm-3 col-xs-3">{item.Descripcion}</div>
+                                      <div className="col-sm-2 col-xs-2">{item.Nombre}</div>
+                                      <div className="col-sm-2 col-xs-2">{item.Descripcion}</div>
                                       <div className="col-sm-2 col-xs-2">{item.Cantidad}</div>  
                                       <div className="col-sm-2 col-xs-2">{item.Precio}</div>
-                                      <div className="col-sm-2 col-xs-2">{item.Total}</div>    
+                                      <div className="col-sm-2 col-xs-2">{item.Total}</div> 
+                                      <div className="col-sm-2 col-xs-2">
+                                         <button className="btn btn-danger"
+                                                onClick={() => {
+                                                    this.props.CarritoMemoriaQuitar(item);
+                                                }}
+                                                type="button"
+                                              >
+                                              -
+                                              </button>
+                                              <button className="btn btn-success"
+                                                onClick={() => {
+                                                    this.props.CarritoMemoria(item);
+                                                }}
+                                                type="button"
+                                              >
+                                              +
+                                              </button>
+                                      </div>    
+
                                     </div>
                                   );
                                 })}
+                                <div className="row border" >
+                                      <div className="col-sm-2 col-xs-2">Total</div>
+                                      <div className="col-sm-2 col-xs-2"></div>
+                                      <div className="col-sm-2 col-xs-2"></div>
+                                      <div className="col-sm-2 col-xs-2"></div>
+                                      <div className="col-sm-2 col-xs-2"></div>
+                                      <div className="col-sm-2 col-xs-2">{this.state.Carrito.reduce((a, b) => a + b.Total, 0)}</div>    
+                                    </div>
                               </div>
                             )}
                             <button

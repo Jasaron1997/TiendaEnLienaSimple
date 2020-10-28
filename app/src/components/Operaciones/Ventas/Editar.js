@@ -23,18 +23,6 @@ import makeAnimated from "react-select/animated";
       });
     };
 
-    
-    updateStateSelectRol= (Rol) => {
-      if(Rol.Nombre=="Administrador")
-          {
-            this.setState({Cliente:false})
-          }
-      else{
-        this.setState({Cliente:true})
-      }
-      
-          this.setState({Rol});
-        };
 
     UpdateState = (e) => {
       const { name, value } = e.target;
@@ -53,7 +41,7 @@ import makeAnimated from "react-select/animated";
     const { id } = this.props.match.params;
 
     const data = await fetchGet(
-      `${process.env.REACT_APP_SERVER}/api/compra/${id}`
+      `${process.env.REACT_APP_SERVER}/api/venta/${id}`
     );
     this.setState({ ...data.data });
   }
@@ -69,20 +57,20 @@ import makeAnimated from "react-select/animated";
       return (
         <Fragment>
           {redireccion}
-        <h1 className="text-center mb-5">Detalle de  compra</h1>
+        <h1 className="text-center mb-5">Detalle de  venta</h1>
       
             <div className="row justify-content-center">
               <form 
                 className="col-md-8 col-sm-12"
               >
               <div className="form-group">
-                <label>Proveedor:</label>
+                <label>Cliente:</label>
                   <input readOnly
                     type="text"
-                    name="Proveedor"
+                    name="Cliente"
                     className="form-control"
                     onChange={this.UpdateState}
-                    defaultValue={(this.state.Proveedor)?this.state.Proveedor[0].Nombre:""}
+                    defaultValue={(this.state.Cliente)?this.state.Cliente[0].Nombre:""}
                   />
                 </div>
                 <div className="form-group">
@@ -93,16 +81,6 @@ import makeAnimated from "react-select/animated";
                     className="form-control"
                     onChange={this.UpdateState}
                     defaultValue={this.props.formato(this.state.Fecha)}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Usuario:</label>
-                  <input
-                    type="text"
-                    name="Usuario"
-                    readOnly
-                    className="form-control"
-                    defaultValue={(this.state.Usuario)?this.state.Usuario[0].Usuario:""}
                   />
                 </div>
                 <div className="form-group">
@@ -121,7 +99,7 @@ import makeAnimated from "react-select/animated";
                                   <div className="col-sm-3 col-xs-3">Nombre</div>
                                   <div className="col-sm-3 col-xs-3 ">Descripcion</div>
                                   <div className="col-sm-2 col-xs-2">Cantidad</div>
-                                  <div className="col-sm-2 col-xs-2 ">Costo</div>
+                                  <div className="col-sm-2 col-xs-2 ">Precio</div>
                                   <div className="col-sm-2 col-xs-2 ">Total</div>
                                 </div>
                                 {this.state.Detalle.map((item) => {
@@ -145,7 +123,6 @@ import makeAnimated from "react-select/animated";
                                     </div>
                               </div>
                             )}
-                            
               
               </form>
             </div>

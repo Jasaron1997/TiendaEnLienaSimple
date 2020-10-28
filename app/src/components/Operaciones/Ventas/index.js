@@ -11,7 +11,7 @@ class Index extends Component {
   }
 
   Buscar = async () =>{
-    const data = await fetchGet(`${process.env.REACT_APP_SERVER}/api/usuario`);
+    const data = await fetchGet(`${process.env.REACT_APP_SERVER}/api/venta`);
     this.setState({ dataFiltrada: data.data, data: data.data,estado:"Re Activar"});
   }
 
@@ -38,16 +38,16 @@ cambioEstado = (e) => {
 
 
 
-Eliminar = async (_id) => {
-  const data = await fetchDelete(
-    `${process.env.REACT_APP_SERVER}/api/usuario/${_id}`
-  );
-  alert(data.message);
-  const dataGet = await fetchGet(
-    `${process.env.REACT_APP_SERVER}/api/usuario`
-  );
-  this.setState({ dataFiltrada: dataGet.data, data: dataGet.data });
-};
+// Eliminar = async (_id) => {
+//   const data = await fetchDelete(
+//     `${process.env.REACT_APP_SERVER}/api/ve/${_id}`
+//   );
+//   alert(data.message);
+//   const dataGet = await fetchGet(
+//     `${process.env.REACT_APP_SERVER}/api/compra`
+//   );
+//   this.setState({ dataFiltrada: dataGet.data, data: dataGet.data });
+// };
 
 
 
@@ -65,10 +65,10 @@ Eliminar = async (_id) => {
     return (
       <Fragment>
         {redireccion}
-        <h1 className="text-center mb-5">usuario</h1>
+        <h1 className="text-center mb-5">Ventas</h1>
         <form class="form-inline " onSubmit={this.BuscarDatos}>
           <label className="ml-5 mr-5">
-            <strong>Nombre del Usuario:</strong>
+            <strong>Buscar Factura:</strong>
           </label>
           <input
             class="form-control mr-sm-5"
@@ -83,45 +83,32 @@ Eliminar = async (_id) => {
             Buscar
           </button>
         </form>
-
-          <Link
-            to={`${process.env.PUBLIC_URL}/usuarios/crear`}
-            className="btn btn-link  ml-5 mr-5"
-          >
-            Crear
-          </Link>
-
-
         {this.state.dataFiltrada && (
           <div className="ml-5 mr-5">
             <div className="row border">
-              <div className="col-sm-2 col-xs-2">Usuario</div>
-              <div className="col-sm-2 col-xs-2">NOMBRE</div>
-              <div className="col-sm-2 col-xs-2 d-none d-sm-block">Direccion</div>
-              <div className="col-sm-2 col-xs-2 d-none d-sm-block">Telefono</div>
-              <div className="col-sm-1 col-xs-1 d-none d-sm-block">DPI</div>
-              <div className="col-sm-1 col-xs-1 d-none d-sm-block">Nit</div>
+              <div className="col-sm-2 col-xs-2">Cliente</div>
+              <div className="col-sm-2 col-xs-2">Fecha</div>
+              <div className="col-sm-2 col-xs-2 d-none d-sm-block">Factura</div>
+              <div className="col-sm-2 col-xs-2 d-none d-sm-block">Total</div>
               <div className="col-sm-2 col-xs-2">OPCIONES</div>
             </div>
             {this.state.dataFiltrada.map((item) => {
               const { _id } = item;
               return (
                 <div className="row border" key={_id}>
-                  <div className="col-sm-2 col-xs-2">{item.Usuario}</div>
-                  <div className="col-sm-2 col-xs-2">{item.Nombre}</div>
-                  <div className="col-sm-2 col-xs-2 d-none d-sm-block">{item.Direccion}</div>  
-                  <div className="col-sm-2 col-xs-2 d-none d-sm-block">{item.Telefono}</div>    
-                  <div className="col-sm-1 col-xs-1 d-none d-sm-block">{item.DPI}</div>    
-                  <div className="col-sm-1 col-xs-1 d-none d-sm-block">{item.Nit}</div>    
+                  <div className="col-sm-2 col-xs-2">{item.Cliente[0].Nombre}</div>
+                  <div className="col-sm-2 col-xs-2">{this.props.formato(item.Fecha)}</div>
+                  <div className="col-sm-2 col-xs-2 d-none d-sm-block">{item.Factura}</div>    
+                  <div className="col-sm-2 col-xs-2 d-none d-sm-block">{item.Detalle.reduce((a, b) => a + b.Total, 0)}</div>    
 
                   <div className="col-sm-2 col-xs-2">
                       <Link
-                        to={`${process.env.PUBLIC_URL}/usuarios/modificar/${item._id}`}
+                        to={`${process.env.PUBLIC_URL}/ventas/detalles/${item._id}`}
                         className="btn btn-warning m-1"
                       >
-                        Modificar
+                        Detalles
                       </Link>
-                      <button
+                      {/* <button
                         onClick={() => {
                           if (window.confirm("Seguro que deseas el usuario")) {
                             this.Eliminar(item._id);
@@ -131,7 +118,7 @@ Eliminar = async (_id) => {
                         className="btn btn-danger m-1 "
                       >
                         &times; Eliminar
-                      </button>
+                      </button> */}
                   </div>
                 </div>
               );

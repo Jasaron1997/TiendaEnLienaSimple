@@ -38,6 +38,10 @@ import Compra from "./components/Operaciones/Compras";
 import CompraNuevo from "./components/Operaciones/Compras/ComprasNuevo";
 import CompraEditar from "./components/Operaciones/Compras/ComprasEditar";
 
+
+import Venta from "./components/Operaciones/Ventas";
+import VentaEditar from "./components/Operaciones/Ventas/Editar";
+
 import CarritoVenta from "./components/Operaciones/CarritoVenta/Carrito";
 
 import Proveedores from "./components/Catalogos/Proveedores";
@@ -72,6 +76,41 @@ if(data)
    }
   };
 
+
+ 
+  CarritoMemoriaQuitar = async (Producto) => {
+    
+    let carrito=await this.state.Carrito.find(x=>x._id==Producto._id);
+debugger
+    if((Producto.Cantidad)<=1){
+
+       carrito=await this.state.Carrito.filter(x=>x._id!=Producto._id);
+
+
+      await this.setState({
+        Carrito:carrito
+        })
+    }else{
+      if(carrito)
+      {
+        let carrito=this.state.Carrito;
+      
+      
+            carrito.map((item)=>{
+              if(item._id==Producto._id)
+                {
+            item.Cantidad--;
+            item.Total=item.Precio*item.Cantidad;
+              }
+            })
+        await this.setState({
+          Carrito:carrito
+          })
+      }
+    }
+
+
+  };
 
   CarritoMemoria = async (Producto) => {
     
@@ -183,7 +222,9 @@ if(carrito)
           <Route exact path={`${process.env.PUBLIC_URL}/productos/crear`} render={() => <ProductosNuevo Access={this.Access} auth={this.state.auth}/>} />
           <Route exact path={`${process.env.PUBLIC_URL}/productos/modificar/:id`} render={() => <ProductosEditar  Access={this.Access} auth={this.state.auth}/>} />
           <Route exact path={`${process.env.PUBLIC_URL}/productos/listadoproductos`} render={() => <ProductosListado  Access={this.Access} auth={this.state.auth} CarritoMemoria={this.CarritoMemoria}/>} />
-          <Route exact path={`${process.env.PUBLIC_URL}/CarritoVenta`} render={() => <CarritoVenta  Access={this.Access} auth={this.state.auth} Carrito={this.state.Carrito}/>} />
+          <Route exact path={`${process.env.PUBLIC_URL}/CarritoVenta`} render={() => <CarritoVenta  Access={this.Access} auth={this.state.auth} Carrito={this.state.Carrito} 
+          CarritoMemoriaQuitar={this.CarritoMemoriaQuitar}
+          CarritoMemoria={this.CarritoMemoria}/>} />
           
           
           {/*proveedores*/}
@@ -195,6 +236,9 @@ if(carrito)
           <Route exact path={`${process.env.PUBLIC_URL}/compras`} render={() => <Compra formato={formato} Access={this.Access} auth={this.state.auth}/>} />
           <Route exact path={`${process.env.PUBLIC_URL}/compras/crear`} render={() => <CompraNuevo Access={this.Access} auth={this.state.auth}/>} />
           <Route exact path={`${process.env.PUBLIC_URL}/compras/detalles/:id`} render={() => <CompraEditar formato={formato} Access={this.Access}/>} />
+        
+          <Route exact path={`${process.env.PUBLIC_URL}/ventas`} render={() => <Venta formato={formato} Access={this.Access} auth={this.state.auth}/>} />
+          <Route exact path={`${process.env.PUBLIC_URL}/ventas/detalles/:id`} render={() => <VentaEditar formato={formato} Access={this.Access}/>} />
          </Switch>
         </header>
       </Router>

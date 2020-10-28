@@ -99,6 +99,7 @@ Eliminar = async (_id) => {
               <div className="col-sm-2 col-xs-2">Fecha</div>
               <div className="col-sm-2 col-xs-2 d-none d-sm-block">Usuario</div>
               <div className="col-sm-2 col-xs-2 d-none d-sm-block">Factura</div>
+              <div className="col-sm-2 col-xs-2 d-none d-sm-block">Total</div>
               <div className="col-sm-2 col-xs-2">OPCIONES</div>
             </div>
             {this.state.dataFiltrada.map((item) => {
@@ -109,6 +110,7 @@ Eliminar = async (_id) => {
                   <div className="col-sm-2 col-xs-2">{this.props.formato(item.Fecha)}</div>
                   <div className="col-sm-2 col-xs-2 d-none d-sm-block">{item.Usuario[0].Usuario}</div>  
                   <div className="col-sm-2 col-xs-2 d-none d-sm-block">{item.Factura}</div>    
+                  <div className="col-sm-2 col-xs-2 d-none d-sm-block">{item.Detalle.reduce((a, b) => a + b.Total, 0)}</div>    
 
                   <div className="col-sm-2 col-xs-2">
                       <Link

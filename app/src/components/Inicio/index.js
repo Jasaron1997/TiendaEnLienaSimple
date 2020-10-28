@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { fetchGet } from "../../utils/Fetch";
-
+import Listado from "../Catalogos/productos/Listado";
 
 // import { fetchPost } from "../../utils/Fetch";
 // import Error from '../Alertas/Error';
@@ -26,7 +26,15 @@ class Inicio extends Component {
     ...initialState,
   };
 
-  
+  Buscar = async () =>{
+    const data = await fetchGet(`${process.env.REACT_APP_SERVER}/api/producto`);
+    this.setState({ dataFiltrada: data.data, data: data.data,estado:"Re Activar"});
+  }
+
+   componentDidMount() {
+   this.Buscar();
+  }
+
   render() {
    
     return (
@@ -62,6 +70,32 @@ class Inicio extends Component {
         </div>
         <br />
         <br />
+
+        <div className="row justify-content-center">
+        {this.state.dataFiltrada && (
+          <div className="col-12 p-2 row">
+            {this.state.dataFiltrada.map((item) => {
+              const { _id } = item;
+              return (
+                <div className="col-3 p-4">
+                  <div className="card">
+                    {/* <img class="card-img-top" src="..." alt="Card image cap"> */}
+                      <div className="card-body">
+                        <h5 className="card-title">{item.Nombre}</h5>
+                        <p className="card-text">{item.Descripcion}</p>
+                      </div>
+                      <ul className="list-group list-group-flush">
+                        <li className="list-group-item">Precio {item.Precio}</li>
+                        <li className="list-group-item">Existencia {item.Existencia}</li>
+                      </ul>
+                   
+                    </div> 
+                    </div> 
+              );
+            })}
+          </div>
+        )}
+        </div>
       </Fragment>
     );
   }
