@@ -79,7 +79,7 @@ const { Nombre,
   Fecha,
   Usuario}=req.body;
   try {
-    const datos=await Usuarios.findById(
+    const datos=await Proveedores.findById(
       { _id: _id });
     
       datos.Nombre=Nombre;
