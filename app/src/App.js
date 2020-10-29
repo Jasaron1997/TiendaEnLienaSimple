@@ -49,6 +49,7 @@ import CarritoVenta from "./components/Operaciones/CarritoVenta/Carrito";
 import Proveedores from "./components/Catalogos/Proveedores";
 import ProveedoresNuevo from "./components/Catalogos/Proveedores/ProveedorNuevo";
 import ProveedoresEditar from "./components/Catalogos/Proveedores/ProveedorEditar";
+import { timers } from "jquery";
 function formato(texto){
   texto=texto.substring(0,10);
   return texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
@@ -62,7 +63,9 @@ class App extends Component {
   async componentDidMount() {
     await this.authenticateToken();
   }
-
+LimpiarCarrito=async()=>{
+ await this.setState({Carrito:[]})
+}
   authenticateToken = async () => {
     const data = await fetchPost(
       `${process.env.REACT_APP_SERVER}/api/authenticateToken`,
@@ -123,7 +126,7 @@ if(carrito)
 {
   let carrito=this.state.Carrito;
       carrito.map((item)=>{
-        if(item._id==Producto._id)
+        if(item._id==Producto._id && Producto.Existencia>item.Cantidad)
           {
       item.Cantidad++;
       item.Total=item.Precio*item.Cantidad;
@@ -180,6 +183,7 @@ if(carrito)
 
   cerrarsesion = async () => {
     await localStorage.removeItem("token", "");
+    this.LimpiarCarrito()
     this.authenticateToken();
 
   };
@@ -199,11 +203,11 @@ if(carrito)
       <Router>
     
           {/* {this.authenticateToken()} */}
-          <Navbar auth={this.state.auth} authenticateToken={this.authenticateToken}   Access={this.Access}/>
+          <Navbar auth={this.state.auth} authenticateToken={this.authenticateToken} LimpiarCarrito={this.LimpiarCarrito}  Access={this.Access}/>
           <header className=" container-fluid App-header ">
           <p className="text-right">{mensaje}</p>
           <Switch>
-          <Route exact path={`${process.env.PUBLIC_URL}/`} render={() => <Inicio auth={this.auth}   Access={this.Access}/>} />
+          <Route exact path={`${process.env.PUBLIC_URL}/`} render={() => <Inicio auth={this.state.auth}   Access={this.Access}/>} />
           <Route exact path={`${process.env.PUBLIC_URL}/login`} render={() => <Login auth={this.auth}   Access={this.Access}/>} />
           {/*Roles */}
           <Route exact path={`${process.env.PUBLIC_URL}/roles`} render={() => <Rol Access={this.Access}/>} />
@@ -224,7 +228,7 @@ if(carrito)
           <Route exact path={`${process.env.PUBLIC_URL}/productos/crear`} render={() => <ProductosNuevo Access={this.Access} auth={this.state.auth}/>} />
           <Route exact path={`${process.env.PUBLIC_URL}/productos/modificar/:id`} render={() => <ProductosEditar  Access={this.Access} auth={this.state.auth}/>} />
           <Route exact path={`${process.env.PUBLIC_URL}/productos/listadoproductos`} render={() => <ProductosListado  Access={this.Access} auth={this.state.auth} CarritoMemoria={this.CarritoMemoria}/>} />
-          <Route exact path={`${process.env.PUBLIC_URL}/CarritoVenta`} render={() => <CarritoVenta  Access={this.Access} auth={this.state.auth} Carrito={this.state.Carrito} 
+          <Route exact path={`${process.env.PUBLIC_URL}/CarritoVenta`} render={() => <CarritoVenta  LimpiarCarrito={this.LimpiarCarrito} Access={this.Access} auth={this.state.auth} Carrito={this.state.Carrito} 
           CarritoMemoriaQuitar={this.CarritoMemoriaQuitar}
           CarritoMemoria={this.CarritoMemoria}/>} />
           

@@ -31,13 +31,13 @@ import makeAnimated from "react-select/animated";
     };
   
     validarForm = () => {
-      const {Fecha} = this.state;
-      const noValido = !Fecha||!this.props.Carrito[0];
+      const {Fecha,Direccion,Telefono} = this.state;
+      const noValido = !Fecha||!this.props.Carrito[0]||!Direccion||!Telefono;
       return noValido;
     };
     
   async componentDidMount() {
-    this.setState({Carrito:this.props.Carrito });
+    this.setState({Carrito:this.props.Carrito,...this.props.auth });
 
 
   }
@@ -64,8 +64,11 @@ await this.setState({
     );
 
 
-    this.setState({ data: data.data });
+    await this.setState({ data: data.data });
     alert(data.message);
+
+
+    this.props.LimpiarCarrito();
     this.props.history.push("/productos/listadoproductos");
     
   
@@ -109,6 +112,26 @@ await this.setState({
                     defaultValue={(this.props.auth.Usuario)?this.props.auth.Usuario:""}
                   />
                 </div>
+                <div className="form-group">
+                  <label>Direccion:</label>
+                  <input
+                    type="text"
+                    name="Direccion"
+                    className="form-control"
+                    onChange={this.UpdateState}
+                    defaultValue={(this.props.auth.Usuario)?this.props.auth.Direccion:""}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Telefono:</label>
+                  <input
+                    type="Telefono"
+                    name="Telefono"
+                    className="form-control"
+                    onChange={this.UpdateState}
+                    defaultValue={(this.props.auth.Usuario)?this.props.auth.Telefono:""}
+                  />
+                </div>
                               {this.state.Carrito && (
                               <div className="m-2">
                                 <div className="row border">
@@ -139,6 +162,7 @@ await this.setState({
                                               -
                                               </button>
                                               <button className="btn btn-success"
+                                               disabled={!(item.Existencia>item.Cantidad)}
                                                 onClick={() => {
                                                     this.props.CarritoMemoria(item);
                                                 }}

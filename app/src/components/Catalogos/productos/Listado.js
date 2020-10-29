@@ -137,6 +137,7 @@ cambioEstado = (e) => {
                       </ul>
                       <div className="card-body">
                               <button className="btn btn-success"
+                              disabled={!item.Existencia>0}
                               onClick={() => {
                                   this.props.CarritoMemoria(item);
                                   alert("Producto agregado al carrito");

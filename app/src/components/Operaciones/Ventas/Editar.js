@@ -93,7 +93,25 @@ import makeAnimated from "react-select/animated";
                     defaultValue={this.state.Factura}
                   />
                 </div>
-                              {this.state.Detalle && (
+                <div className="form-group">
+                  <label>Telefono:</label>
+                  <input readOnly
+                    type="text"
+                    name="Telefono"
+                    className="form-control"
+                    onChange={this.UpdateState}
+                    defaultValue={this.state.Telefono}
+                  />
+                </div> <div className="form-group">
+                  <label>Direccion:</label>
+                  <input readOnly
+                    type="text"
+                    name="Direccion"
+                    className="form-control"
+                    onChange={this.UpdateState}
+                    defaultValue={this.state.Direccion}
+                  />
+                </div>       {this.state.Detalle && (
                               <div className="m-5">
                                 <div className="row border">
                                   <div className="col-sm-3 col-xs-3">Nombre</div>

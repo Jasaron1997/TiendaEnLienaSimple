@@ -38,7 +38,9 @@ const VentasSchema = new mongoose.Schema({
   Cliente:Array,
   Fecha:Date,
   Factura:Number,
-  Detalle:Array
+  Detalle:Array,
+  Direccion:String,
+  Telefono:Number,
 });
 
 

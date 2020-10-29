@@ -20,7 +20,7 @@ export async function get(req, res) {
 export async function post(req, res) {
   const {Cliente,
     Fecha,
-    Usuario,
+    Usuario,Direccion,Telefono,
     Detalle} = req.body;
   try {
 
@@ -30,7 +30,7 @@ Factura++;
 const datos =  new Ventas({				
   Cliente,
   Fecha,
-  Usuario,
+  Usuario,Direccion,Telefono,
   Factura,
   Detalle
 })

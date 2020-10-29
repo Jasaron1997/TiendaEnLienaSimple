@@ -13,6 +13,8 @@ class navbar extends Component {
   cerrarsesion = async () => {
     await localStorage.removeItem("token", "");
     this.props.authenticateToken();
+    debugger
+    this.props.LimpiarCarrito();
     this.props.history.push("/");
   };
   render() {

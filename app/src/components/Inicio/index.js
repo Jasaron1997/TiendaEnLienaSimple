@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { withRouter } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { fetchGet } from "../../utils/Fetch";
 import Listado from "../Catalogos/productos/Listado";
@@ -40,41 +40,17 @@ class Inicio extends Component {
   }
 
   render() {
-   
+    debugger
+
+
+    const redireccion = this.props.auth ? (
+      <Redirect to="/productos/listadoproductos" />
+    ) : (
+     ""
+    );
     return (
       <Fragment>
-        <div class="text-center">
-          
-        </div>
-
-        <div className="container`">
-          <div className="row text-center">
-            <div className="col-md-3">
-              <h2>MISION</h2>
-              <p>
-                qwqwe
-              </p>
-            </div>
-            <div className="col-md-4">
-              <h2>VISION</h2>
-              <p>
-               qwewq
-              </p>
-            </div>
-            <div className="col-md-3">
-              <h2>VALORES</h2>
-              <p>
-               qwewqe
-              </p>
-            </div>
-
-          </div>
-
-          <hr />
-        </div>
-        <br />
-        <br />
-
+    {redireccion}
         <div className="row justify-content-center">
         {this.state.dataFiltrada && (
           <div className="col-12 p-2 row">
