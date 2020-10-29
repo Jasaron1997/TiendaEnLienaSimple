@@ -191,6 +191,14 @@ class navbar extends Component {
                        ventas
                       </Link>
                     )}
+                    {this.props.Access("Administrador") && (
+                      <Link
+                        to={`${process.env.PUBLIC_URL}/reporte`}
+                        className="dropdown-item"
+                      >
+                       reporte
+                      </Link>
+                    )}
                     {this.props.Access("Cliente") && (
                       <Link
                     to={`${process.env.PUBLIC_URL}/CarritoVenta`}

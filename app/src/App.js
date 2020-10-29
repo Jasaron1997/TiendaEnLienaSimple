@@ -41,6 +41,8 @@ import CompraEditar from "./components/Operaciones/Compras/ComprasEditar";
 
 import Venta from "./components/Operaciones/Ventas";
 import VentaEditar from "./components/Operaciones/Ventas/Editar";
+import VentaReportes from "./components/Operaciones/Ventas/reporte";
+
 
 import CarritoVenta from "./components/Operaciones/CarritoVenta/Carrito";
 
@@ -236,7 +238,9 @@ if(carrito)
           <Route exact path={`${process.env.PUBLIC_URL}/compras`} render={() => <Compra formato={formato} Access={this.Access} auth={this.state.auth}/>} />
           <Route exact path={`${process.env.PUBLIC_URL}/compras/crear`} render={() => <CompraNuevo Access={this.Access} auth={this.state.auth}/>} />
           <Route exact path={`${process.env.PUBLIC_URL}/compras/detalles/:id`} render={() => <CompraEditar formato={formato} Access={this.Access}/>} />
-        
+          
+          <Route exact path={`${process.env.PUBLIC_URL}/reporte`} render={() => <VentaReportes formato={formato} Access={this.Access} auth={this.state.auth}/>} />
+
           <Route exact path={`${process.env.PUBLIC_URL}/ventas`} render={() => <Venta formato={formato} Access={this.Access} auth={this.state.auth}/>} />
           <Route exact path={`${process.env.PUBLIC_URL}/ventas/detalles/:id`} render={() => <VentaEditar formato={formato} Access={this.Access}/>} />
          </Switch>
