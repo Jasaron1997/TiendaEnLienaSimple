@@ -33,8 +33,26 @@ class Nuevo extends Component {
       [name]: value,
     });
   };
- 
+  FromBase64 = function (str) {
+    return atob(str).split('').map(function (c) { return c.charCodeAt(0); });
+  }
 
+  UpdateStateFile = (e) => {
+    const image = e.target.files[0]
+   // this.setState({ files: e.target.files[0] })
+      const reader = new window.FileReader()
+      reader.readAsDataURL(image)
+      reader.onload = e => {
+        // let asciiString = window.atob(e.target.result.split(',')[1])
+
+        this.setState({ base64:this.FromBase64(e.target.result.split(',')[1]) })
+        this.setState({ original:(e.target.result.split(',')[1]) })
+
+      }
+     // this.setState({ reader:reader})
+ 
+  };
+ 
 
   validarForm = () => {
     const {Nombre} = this.state;
@@ -137,7 +155,12 @@ this.setState({...auth})
               defaultValue={this.state.Costo}
             />
           </div> 
-         
+          <div> 
+                <img class="card-img-top" src={"data:image/jpeg;base64,"+this.state.original} alt="" />
+                <input type="file" id="imagen"  accept="image/*"
+                    onChange={this.UpdateStateFile}
+                       name="imagen" defaultValue={this.state.imagen} required/> 
+            </div> 
           <button
             disabled={this.validarForm()}
             type="submit"

@@ -24,6 +24,7 @@ export async function post(req, res) {
     Usuario,
     Existencia,
     Precio,
+    base64,
     Costo} = req.body;
   try {
 
@@ -34,7 +35,11 @@ const datos =  new Productos({
     Usuario,
     Existencia,
     Precio,
-    Costo
+    Costo,
+    img: { 
+      data: base64, 
+      contentType: 'image'
+  } 
 })
 datos.id = datos._id;
 await datos.save();
@@ -76,12 +81,11 @@ const { Nombre,
   Fecha,
   Usuario,
   Existencia,
-  Precio,
+  Precio,base64,
   Costo}=req.body;
   try {
 const datos=await Productos.findById(
   { _id: _id })
-
   datos.Nombre=Nombre;
   datos.Descripcion=Descripcion;
   datos.Fecha=Fecha;
@@ -89,6 +93,10 @@ const datos=await Productos.findById(
   datos.Existencia=Existencia;
   datos.Precio=Precio;
   datos.Costo=Costo;  
+  datos.img= { 
+    data: base64, 
+    contentType: 'image'
+}; 
   await datos.save();
   res.json({ message: "producto Modificado", data: datos });
   } catch (e) {

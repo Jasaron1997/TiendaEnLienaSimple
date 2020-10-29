@@ -1,6 +1,7 @@
-import express, { json } from "express";
+import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+
 
 import config from "./config";
 
@@ -28,7 +29,9 @@ import comprasRouter from "./routes/compras";
 
 // Middlewares
 app.use(morgan("dev"));
-app.use(json());
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
+
 
 // Routes
 

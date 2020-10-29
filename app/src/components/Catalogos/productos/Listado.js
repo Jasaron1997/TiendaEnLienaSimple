@@ -11,9 +11,37 @@ class Index extends Component {
   }
 
   Buscar = async () =>{
-    const data = await fetchGet(`${process.env.REACT_APP_SERVER}/api/producto`);
-    this.setState({ dataFiltrada: data.data, data: data.data,estado:"Re Activar"});
+    let data = await fetchGet(`${process.env.REACT_APP_SERVER}/api/producto`);
+
+    data.data.map(item=>{
+      item.base64=btoa(String.fromCharCode.apply(null, (item.img.data.data)))
+    })
+
+
+
+   await this.setState({ dataFiltrada: data.data, data: data.data,estado:"Re Activar"});
+
+
+
+
+// debugger
+//   var datosss=data.data[0].img.data.data
+
+    
+//     var b64 = this.ToBase64(datosss);
+//     console.debug(b64);
+//     console.debug(this.FromBase64(b64));
+//     console.log(this.FromBase64(b64))
+    
   }
+  ToBase64 = function (u8) {
+    return btoa(String.fromCharCode.apply(null, u8));
+  }
+  
+  FromBase64 = function (str) {
+    return atob(str).split('').map(function (c) { return c.charCodeAt(0); });
+  }
+
 
    componentDidMount() {
    this.Buscar();
@@ -29,14 +57,16 @@ class Index extends Component {
     });
   };
 
-  
-Carrito = async (_id) => {
-  
 
-
-};
-
-
+_arrayBufferToBase64=( buffer )=> {
+  var binary = '';
+  var bytes = new Uint8Array( buffer );
+  var len = bytes.byteLength;
+  for (var i = 0; i < len; i++) {
+      binary += String.fromCharCode( bytes[ i ] );
+  }
+  return window.btoa( binary );
+}
 
 cambioEstado = (e) => {
   const { name, value } = e.target;
@@ -89,7 +119,14 @@ cambioEstado = (e) => {
               return (
                 <div className="col-3 p-4">
                   <div className="card">
-                    {/* <img class="card-img-top" src="..." alt="Card image cap"> */}
+                   <img class="card-img-top" src={"data:image/jpeg;base64,"+item.base64} alt="Card image cap"/>
+                 {/* <img class="card-img-top" src={item.img.data.toString('base64')} alt="Card image cap"/>
+                  <img class="card-img-top" src={"data:image/"+item.img.data.toString('base64')} alt="Card image cap"/>
+                  <img class="card-img-top" src={"data:image/"+item.img.data} alt="Card image cap"/>
+                  <img class="card-img-top" src={"data:image/jpeg;base64,"+item.img.data} alt="Card image cap"/>
+                  <img class="card-img-top" src={"data:image/jpeg;base64,"+item.img.data.toString('base64')} alt="Card image cap"/>
+                      e.target.result.split(',')[1]*/}
+
                       <div className="card-body">
                         <h5 className="card-title">{item.Nombre}</h5>
                         <p className="card-text">{item.Descripcion}</p>

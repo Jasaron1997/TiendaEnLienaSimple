@@ -70,6 +70,11 @@ const ProductosSchema = new mongoose.Schema({
   Existencia:Number,
   Precio:Number,
   Costo:Number,
+  img: 
+    { 
+        data: Buffer, 
+        contentType: String 
+    } 
 });
 
 

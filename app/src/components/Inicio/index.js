@@ -28,6 +28,10 @@ class Inicio extends Component {
 
   Buscar = async () =>{
     const data = await fetchGet(`${process.env.REACT_APP_SERVER}/api/producto`);
+    data.data.map(item=>{
+      item.base64=btoa(String.fromCharCode.apply(null, (item.img.data.data)))
+    })
+
     this.setState({ dataFiltrada: data.data, data: data.data,estado:"Re Activar"});
   }
 
@@ -79,7 +83,14 @@ class Inicio extends Component {
               return (
                 <div className="col-3 p-4">
                   <div className="card">
-                    {/* <img class="card-img-top" src="..." alt="Card image cap"> */}
+                   <img class="card-img-top" src={"data:image/jpeg;base64,"+item.base64} alt="Card image cap"/>
+                 {/* <img class="card-img-top" src={item.img.data.toString('base64')} alt="Card image cap"/>
+                  <img class="card-img-top" src={"data:image/"+item.img.data.toString('base64')} alt="Card image cap"/>
+                  <img class="card-img-top" src={"data:image/"+item.img.data} alt="Card image cap"/>
+                  <img class="card-img-top" src={"data:image/jpeg;base64,"+item.img.data} alt="Card image cap"/>
+                  <img class="card-img-top" src={"data:image/jpeg;base64,"+item.img.data.toString('base64')} alt="Card image cap"/>
+                      e.target.result.split(',')[1]*/}
+
                       <div className="card-body">
                         <h5 className="card-title">{item.Nombre}</h5>
                         <p className="card-text">{item.Descripcion}</p>
@@ -88,7 +99,6 @@ class Inicio extends Component {
                         <li className="list-group-item">Precio {item.Precio}</li>
                         <li className="list-group-item">Existencia {item.Existencia}</li>
                       </ul>
-                   
                     </div> 
                     </div> 
               );

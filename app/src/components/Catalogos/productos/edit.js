@@ -49,13 +49,32 @@ import makeAnimated from "react-select/animated";
       const noValido = !Nombre;
       return noValido;
     };
-    
+    UpdateStateFile = (e) => {
+      const image = e.target.files[0]
+     // this.setState({ files: e.target.files[0] })
+        const reader = new window.FileReader()
+        reader.readAsDataURL(image)
+        reader.onload = e => {
+          // let asciiString = window.atob(e.target.result.split(',')[1])
+  
+          this.setState({ base64:this.FromBase64(e.target.result.split(',')[1]) })
+          this.setState({ original:(e.target.result.split(',')[1]) })
+  
+        }
+       // this.setState({ reader:reader})
+   
+    };
+    FromBase64 = function (str) {
+      return atob(str).split('').map(function (c) { return c.charCodeAt(0); });
+    }
   async componentDidMount() {
     const { id } = this.props.match.params;
 
-    const data = await fetchGet(
+    let data = await fetchGet(
       `${process.env.REACT_APP_SERVER}/api/producto/${id}`
     );
+    data.data.base64vieja=btoa(String.fromCharCode.apply(null, (data.data.img.data.data)));
+
     this.setState({ ...data.data });
   }
   
@@ -154,7 +173,18 @@ import makeAnimated from "react-select/animated";
               defaultValue={this.state.Costo}
             />
           </div> 
-         
+          <label>Actual:</label>
+          <img class="card-img-top" src={"data:image/jpeg;base64,"+this.state.base64vieja} alt="Card image cap"/>
+
+          <div> 
+          <label>Nueva:</label>
+                <img class="card-img-top" src={"data:image/jpeg;base64,"+this.state.original} alt="" />
+                <input type="file" id="imagen"  accept="image/*"
+                    onChange={this.UpdateStateFile}
+                       name="imagen" defaultValue={this.state.imagen} required/> 
+            </div> 
+
+
           <button
             disabled={this.validarForm()}
             type="submit"
