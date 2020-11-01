@@ -8,7 +8,8 @@ import makeAnimated from "react-select/animated";
  
   const initialState = {
     _id:""
-    ,Nombre:"",
+    ,Nombre:""
+    ,Fecha:`${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}`
   };
 
   class Carrito extends Component {
@@ -89,17 +90,23 @@ await this.setState({
       
             <div className="row justify-content-center">
               <form  
-          onSubmit={(e) => this.Crear(e)}
+          onSubmit={(e) =>{
+            e.preventDefault()
+            if (window.confirm(`Estado seguro de realizar la compra a la direccion ${this.state.Direccion}`)) {
+              this.Crear(e)
+                          }
+            }}
                 className="col-md-8 col-sm-12"
               >
                 <div className="form-group">
                   <label>Fecha:</label>
                   <input 
-                    type="date"
+                  readOnly
+                    type="text"
                     name="Fecha"
                     className="form-control"
-                    onChange={this.UpdateState}
-                    defaultValue={this.state.Fecha}
+                    // onChange={this.UpdateState}
+                    value={(this.state.Fecha)}
                   />
                 </div>
                 <div className="form-group">

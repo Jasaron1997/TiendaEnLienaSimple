@@ -1,4 +1,5 @@
-import {Ventas, Productos} from "../database/database"
+import { set } from "mongoose";
+import {Ventas, Productos, Estados} from "../database/database"
 
 export async function get(req, res) {
   try {
@@ -25,11 +26,15 @@ export async function post(req, res) {
   try {
 
 let Factura=await Ventas.count({});
+let estados=await Estados.find({});
+
+
 console.log(Factura)
 Factura++;
 const datos =  new Ventas({				
   Cliente,
   Fecha,
+  Estado:estados[0],
   Usuario,Direccion,Telefono,
   Factura,
   Detalle
@@ -62,6 +67,23 @@ Detalle.map(async item=>{
   }
 }
 
+export async function mio(req, res) {
+  const { _id } = req.params;
+  try {
+    const datos = await await Ventas.find({"Cliente._id":_id});
+    res.json({
+         data: datos,
+       });
+   
+  } catch (error) {
+    res.json({
+      data: {},
+      message: "No se encontraron datos",
+    });
+  }
+}
+
+
 export async function getOne(req, res) {
   const { _id } = req.params;
   try {
@@ -88,6 +110,38 @@ const datos=await Ventas.findOneAndUpdate(
   { new: true }
 ).exec()
     res.json({ message: "venta Modificado", data: datos });
+  } catch (e) {
+    console.log(e);
+    res.json({
+      message: "No se pudo Modificar venta.",
+      data: {},
+    });
+  }
+}
+
+export async function cambio(req, res) {
+  const { _id } = req.params;
+  try {
+  let datos=await Ventas.findById({_id})
+  let estados= await Estados.find({});
+
+  let IndexAnterior;
+
+  if(datos.Estado[0])
+  estados.map((item,index)=>{
+    if(item._id.toString()==datos.Estado[0]._id.toString()){
+      console.log(item.Nombre,index,"adentro")
+      IndexAnterior=index;}
+  })
+
+
+if(IndexAnterior==undefined){
+  IndexAnterior=-1;
+}
+
+
+  let nuevodato=await Ventas.findByIdAndUpdate({_id},{"$set":{"Estado":estados[IndexAnterior+1]}})
+    res.json({ message: "el estado a cambiado", data: nuevodato });
   } catch (e) {
     console.log(e);
     res.json({

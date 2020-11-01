@@ -42,6 +42,7 @@ import CompraEditar from "./components/Operaciones/Compras/ComprasEditar";
 import Venta from "./components/Operaciones/Ventas";
 import VentaEditar from "./components/Operaciones/Ventas/Editar";
 import VentaReportes from "./components/Operaciones/Ventas/reporte";
+import Mio from "./components/Operaciones/Ventas/Mio";
 
 
 import CarritoVenta from "./components/Operaciones/CarritoVenta/Carrito";
@@ -49,6 +50,12 @@ import CarritoVenta from "./components/Operaciones/CarritoVenta/Carrito";
 import Proveedores from "./components/Catalogos/Proveedores";
 import ProveedoresNuevo from "./components/Catalogos/Proveedores/ProveedorNuevo";
 import ProveedoresEditar from "./components/Catalogos/Proveedores/ProveedorEditar";
+
+
+import Estados from "./components/Catalogos/Estado";
+import EstadosNuevo from "./components/Catalogos/Estado/Nuevo";
+import EstadosEditar from "./components/Catalogos/Estado/Editar";
+
 import { timers } from "jquery";
 function formato(texto){
   texto=texto.substring(0,10);
@@ -228,7 +235,7 @@ if(carrito)
           <Route exact path={`${process.env.PUBLIC_URL}/productos/crear`} render={() => <ProductosNuevo Access={this.Access} auth={this.state.auth}/>} />
           <Route exact path={`${process.env.PUBLIC_URL}/productos/modificar/:id`} render={() => <ProductosEditar  Access={this.Access} auth={this.state.auth}/>} />
           <Route exact path={`${process.env.PUBLIC_URL}/productos/listadoproductos`} render={() => <ProductosListado  Access={this.Access} auth={this.state.auth} CarritoMemoria={this.CarritoMemoria}/>} />
-          <Route exact path={`${process.env.PUBLIC_URL}/CarritoVenta`} render={() => <CarritoVenta  LimpiarCarrito={this.LimpiarCarrito} Access={this.Access} auth={this.state.auth} Carrito={this.state.Carrito} 
+          <Route exact path={`${process.env.PUBLIC_URL}/CarritoVenta`} render={() => <CarritoVenta  formato={formato}  LimpiarCarrito={this.LimpiarCarrito} Access={this.Access} auth={this.state.auth} Carrito={this.state.Carrito} 
           CarritoMemoriaQuitar={this.CarritoMemoriaQuitar}
           CarritoMemoria={this.CarritoMemoria}/>} />
           
@@ -238,6 +245,11 @@ if(carrito)
           <Route exact path={`${process.env.PUBLIC_URL}/proveedores/crear`} render={() => <ProveedoresNuevo Access={this.Access} auth={this.state.auth}/>} />
           <Route exact path={`${process.env.PUBLIC_URL}/proveedores/modificar/:id`} render={() => <ProveedoresEditar formato={formato} Access={this.Access}/>} />
           
+           {/*Estados*/}
+           <Route exact path={`${process.env.PUBLIC_URL}/Estados`} render={() => <Estados formato={formato} Access={this.Access} auth={this.state.auth}/>} />
+          <Route exact path={`${process.env.PUBLIC_URL}/Estados/crear`} render={() => <EstadosNuevo Access={this.Access} auth={this.state.auth}/>} />
+          <Route exact path={`${process.env.PUBLIC_URL}/Estados/modificar/:id`} render={() => <EstadosEditar formato={formato} Access={this.Access}/>} />
+          
           {/*compras*/}
           <Route exact path={`${process.env.PUBLIC_URL}/compras`} render={() => <Compra formato={formato} Access={this.Access} auth={this.state.auth}/>} />
           <Route exact path={`${process.env.PUBLIC_URL}/compras/crear`} render={() => <CompraNuevo Access={this.Access} auth={this.state.auth}/>} />
@@ -246,7 +258,9 @@ if(carrito)
           <Route exact path={`${process.env.PUBLIC_URL}/reporte`} render={() => <VentaReportes formato={formato} Access={this.Access} auth={this.state.auth}/>} />
 
           <Route exact path={`${process.env.PUBLIC_URL}/ventas`} render={() => <Venta formato={formato} Access={this.Access} auth={this.state.auth}/>} />
-          <Route exact path={`${process.env.PUBLIC_URL}/ventas/detalles/:id`} render={() => <VentaEditar formato={formato} Access={this.Access}/>} />
+          <Route exact path={`${process.env.PUBLIC_URL}/ventas/detalles/:id`} render={() => <VentaEditar formato={formato} Access={this.Access} auth={this.state.auth}/>} />
+          
+          <Route exact path={`${process.env.PUBLIC_URL}/Mio`} render={() => <Mio formato={formato} Access={this.Access} auth={this.state.auth}/>} />
          </Switch>
         </header>
       </Router>

@@ -76,6 +76,14 @@ class navbar extends Component {
                     Carrito
                   </Link>
                 </li>
+                <li className="nav-item ">
+                  <Link
+                    to={`${process.env.PUBLIC_URL}/Mio`}
+                    className="nav-link"
+                  >
+                    Compras/Pedidos
+                  </Link>
+                </li>
             {this.props.Access("Administrador") && (
               <li className="nav-item dropdown">
                 <div className="dropdown">
@@ -154,6 +162,12 @@ class navbar extends Component {
                         className="dropdown-item"
                       >
                       clientes
+                      </Link>
+                      <Link
+                        to={`${process.env.PUBLIC_URL}/estados`}
+                        className="dropdown-item"
+                      >
+                      estados
                       </Link>
                       </Fragment>
                     )}

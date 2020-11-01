@@ -39,8 +39,14 @@ const VentasSchema = new mongoose.Schema({
   Fecha:Date,
   Factura:Number,
   Detalle:Array,
+  Estado:Array,
   Direccion:String,
   Telefono:Number,
+});
+const EstadosSchema = new mongoose.Schema({
+  Fecha:Date,
+  Nombre:String,
+  Descripcion:String,
 });
 
 
@@ -109,5 +115,6 @@ const Ventas = mongoose.model('ventas', VentasSchema);
 const Proveedores = mongoose.model('proveedores', ProveedoresSchema);
 const Productos = mongoose.model('productos', ProductosSchema);
 
+const Estados = mongoose.model('estados', EstadosSchema);
 
-export { Usuarios,Roles,Compras,Ventas,Proveedores,Productos};
+export { Usuarios,Roles,Compras,Ventas,Proveedores,Productos,Estados};

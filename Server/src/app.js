@@ -16,6 +16,7 @@ import usuarioRouter from "./routes/usuario";
 
 import clienteRouter from "./routes/clientes";
 
+import estadoRouter from "./routes/estados";
 
 import authRoutes from "./routes/auth";
 import authenticateTokenRoutes from "./routes/authenticateToken";
@@ -45,6 +46,8 @@ app.use("/api/cliente",clienteRouter);
 
 app.use("/api/producto",productoRouter);
 app.use("/api/proveedor",proveedorRouter);
+
+app.use("/api/estado",estadoRouter);
 
 
 app.use("/api/venta",ventasRouter);

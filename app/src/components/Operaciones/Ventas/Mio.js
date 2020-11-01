@@ -11,7 +11,7 @@ class Index extends Component {
   }
 
   Buscar = async () =>{
-    const data = await fetchGet(`${process.env.REACT_APP_SERVER}/api/venta`);
+    const data = await fetchGet(`${process.env.REACT_APP_SERVER}/api/venta/mio/${this.props.auth._id}`);
     this.setState({ dataFiltrada: data.data, data: data.data,estado:"Re Activar"});
   }
 
@@ -56,7 +56,7 @@ ProximoEstado = async (_id) => {
 
 
   render() {
-    const redireccion = this.props.Access("Administrador") ? (
+    const redireccion = this.props.auth ? (
       ""
     ) : (
       <Redirect to="/login" />
@@ -65,7 +65,7 @@ ProximoEstado = async (_id) => {
     return (
       <Fragment>
         {redireccion}
-        <h1 className="text-center mb-5">Ventas</h1>
+        <h1 className="text-center mb-5">Compras Realizadas</h1>
         <form class="form-inline " onSubmit={this.BuscarDatos}>
           <label className="ml-5 mr-5">
             <strong>Buscar Factura:</strong>
@@ -110,7 +110,7 @@ ProximoEstado = async (_id) => {
                       >
                         Detalles
                       </Link>
-                      <button
+                      {/* <button
                       disabled={item.Estado[0]?item.Estado[0].Nombre=="Recibido":false}
                         onClick={() => {
                           if (window.confirm("Seguro que desea Pasar al siguiente estado")) {
@@ -121,7 +121,7 @@ ProximoEstado = async (_id) => {
                         className="btn btn-success m-1 "
                       >
                         Cambiar estado
-                      </button>
+                      </button> */}
                   </div>
                 </div>
               );

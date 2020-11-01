@@ -9,7 +9,8 @@ import makeAnimated from "react-select/animated";
   const initialState = {
     _id:""
     ,Nombre:"",
-    Fecha:""
+    Fecha:"",
+    Estado:[]
   };
 
   class Editar extends Component {
@@ -48,7 +49,7 @@ import makeAnimated from "react-select/animated";
   
    
     render() {
-      const redireccion = this.props.Access("Administrador") ? (
+      const redireccion = this.props.auth ? (
         ""
       ) : (
         <Redirect to="/login" />
@@ -81,6 +82,16 @@ import makeAnimated from "react-select/animated";
                     className="form-control"
                     onChange={this.UpdateState}
                     defaultValue={this.props.formato(this.state.Fecha)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Estado:</label>
+                  <input readOnly
+                    type="text"
+                    name="Fecha"
+                    className="form-control"
+                    onChange={this.UpdateState}
+                    value={(this.state.Estado[0]?this.state.Estado[0].Nombre:"Sin estado")}
                   />
                 </div>
                 <div className="form-group">
